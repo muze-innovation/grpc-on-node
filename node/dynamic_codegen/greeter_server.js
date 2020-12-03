@@ -34,6 +34,7 @@ var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
  * Implements the SayHello RPC method.
  */
 function sayHello(call, callback) {
+  console.log('Hello is called', call.request.name);
   callback(null, {message: 'Hello from ' + call.request.name});
 }
 
@@ -45,6 +46,7 @@ function main() {
   const port = process.env.PORT || 50051
   var server = new grpc.Server();
   server.addService(hello_proto.Greeter.service, {sayHello: sayHello});
+  console.log(`Listening on ${port}...`);
   server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
   server.start();
 }
