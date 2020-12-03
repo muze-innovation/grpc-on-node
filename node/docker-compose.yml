@@ -9,13 +9,22 @@ networks:
 
 services:
   server:
-    build: ./dynamic_codegen
-    depends_on:
-      - server
+    build: .
     networks:
       - app-net
+    environment:
+      PORT: 50051
     ports:
-      - "8000:8000"
-    command: node greeter_server.js
+      - "50051:50051"
+    command: node /dynamic_codegen/greeter_server.js
+
+  client:
+    build: .
+    networks:
+      - app-net
+    environment:
+      PORT: 50051
+      HOST: server
+    command: node /dynamic_codegen/greeter_client.js docker-compose!
 
 

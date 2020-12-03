@@ -16,7 +16,7 @@
  *
  */
 
-var PROTO_PATH = __dirname + '/../../protos/helloworld.proto';
+var PROTO_PATH = __dirname + '/../protos/helloworld.proto';
 
 var grpc = require('grpc');
 var protoLoader = require('@grpc/proto-loader');
@@ -31,8 +31,9 @@ var packageDefinition = protoLoader.loadSync(
 var hello_proto = grpc.loadPackageDefinition(packageDefinition).helloworld;
 
 function main() {
-  var client = new hello_proto.Greeter('localhost:50051',
-                                       grpc.credentials.createInsecure());
+  const host = process.env.HOST
+  const port = process.env.PORT
+  var client = new hello_proto.Greeter(`${host}:${port}`, grpc.credentials.createInsecure());
   var user;
   if (process.argv.length >= 3) {
     user = process.argv[2];
