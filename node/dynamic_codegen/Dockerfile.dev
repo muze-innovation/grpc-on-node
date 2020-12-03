@@ -1,0 +1,5 @@
+FROM peatisdocking/ts-node-12-alpine
+
+RUN npm install
+
+CMD [ "node", "greeter_server.js" ]

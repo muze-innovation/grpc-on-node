@@ -1,0 +1,21 @@
+version: '3.4'
+
+networks:
+  app-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.100.238.0/24"
+
+services:
+  server:
+    build: ./dynamic_codegen
+    depends_on:
+      - server
+    networks:
+      - app-net
+    ports:
+      - "8000:8000"
+    command: node greeter_server.js
+
+
